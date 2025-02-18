@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User List</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+    <%- include('../partials/header.ejs') %>
+    
+    <div class="container">
+        <h1>User List</h1>
+        <button onclick="window.location.href='/users/edit'">Add User</button>
+        <ul>
+            <% users.forEach(user => { %>
+                <li>
+                    <%= user.name %> - <%= user.email %>
+                    <button onclick="window.location.href='/users/edit/<%= user.id %>'">Edit</button>
+                    <form action="/users/remove/<%= user.id %>" method="POST" style="display: inline;">
+                        <button type="submit">Remove</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    </div>
+
+    <%- include('../partials/footer.ejs') %>
+</body>
+</html>
