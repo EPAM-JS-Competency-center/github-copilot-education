@@ -15,7 +15,7 @@
         <ul>
             <% users.forEach(user => { %>
                 <li>
-                    <%= user.name %> - <%= user.email %>
+                    <a href="/users/<%= user.id %>"><%= user.name %></a> - <a href="/users/<%= user.id %>"><%= user.email %></a>
                     <button onclick="window.location.href='/users/edit/<%= user.id %>'">Edit</button>
                     <form action="/users/remove/<%= user.id %>" method="POST" style="display: inline;">
                         <button type="submit">Remove</button>

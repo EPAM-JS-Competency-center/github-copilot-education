@@ -7,4 +7,5 @@ export function setRoutes(app: Express) {
     app.get('/users/edit/:id?', controller.editUser.bind(controller));
     app.post('/users/edit/:id?', controller.saveUser.bind(controller));
     app.post('/users/remove/:id', controller.removeUser.bind(controller));
+    app.get('/users/:id', controller.viewUser?.bind(controller) || ((req, res) => res.redirect('/users')));
 }

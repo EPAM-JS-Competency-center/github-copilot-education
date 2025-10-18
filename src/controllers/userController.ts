@@ -37,6 +37,20 @@ class UserController {
         this.users = this.users.filter(user => user.id !== userId);
         res.redirect('/users');
     }
+
+    public viewUser(req: any, res: any) {
+        const userId = req.params.id ? parseInt(req.params.id) : null;
+        if (!userId) {
+            res.status(404).render('users/details', { user: null, message: 'User not found' });
+            return;
+        }
+        const user = this.users.find(user => user.id === userId) || null;
+        if (!user) {
+            res.status(404).render('users/details', { user: null, message: 'User not found' });
+            return;
+        }
+        res.render('users/details', { user, message: null });
+    }
 }
 
 export default UserController;

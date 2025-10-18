@@ -10,7 +10,8 @@ describe('UserController', () => {
         controller = new UserController();
         mockResponse = {
             render: jest.fn(),
-            redirect: jest.fn()
+            redirect: jest.fn(),
+            status: jest.fn().mockReturnThis()
         };
     });
 
@@ -61,5 +62,24 @@ describe('UserController', () => {
         mockRequest = { params: { id: '1' } };
         controller.removeUser(mockRequest, mockResponse);
         expect(mockResponse.redirect).toHaveBeenCalledWith('/users');
+    });
+
+    test('viewUser should render details for existing user', () => {
+        mockRequest = { params: { id: '1' } };
+        controller.viewUser(mockRequest, mockResponse);
+        expect(mockResponse.render).toHaveBeenCalledWith('users/details', {
+            user: expect.objectContaining({ id: 1, name: 'John Doe', email: 'john@example.com' }),
+            message: null
+        });
+    });
+
+    test('viewUser should render not found for invalid id', () => {
+        mockRequest = { params: { id: '999' } };
+        controller.viewUser(mockRequest, mockResponse);
+        expect(mockResponse.status).toHaveBeenCalledWith(404);
+        expect(mockResponse.render).toHaveBeenCalledWith('users/details', {
+            user: null,
+            message: 'User not found'
+        });
     });
 });
