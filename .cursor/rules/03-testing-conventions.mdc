@@ -1,0 +1,55 @@
+---
+globs: *.test.ts,*.spec.ts
+description: Testing conventions and Jest patterns
+---
+
+# Testing Conventions
+
+## Test File Organization
+- Test files use `.test.ts` extension
+- Co-locate tests with source files in the same directory
+- Mirror the source file structure in test descriptions
+
+## Jest Configuration
+- Configuration is in [jest.config.js](mdc:jest.config.js)
+- Setup file: [setupTests.js](mdc:setupTests.js)
+
+## Test Structure Patterns
+```typescript
+describe('ModuleName', () => {
+  describe('functionName', () => {
+    it('should handle successful case', () => {
+      // Arrange
+      const input = 'test-input';
+      
+      // Act
+      const result = functionName(input);
+      
+      // Assert
+      expect(result).toBe(expected);
+    });
+
+    it('should handle error case', () => {
+      // Test error conditions
+    });
+  });
+});
+```
+
+## Testing Best Practices
+- Use descriptive test names that explain the scenario
+- Follow Arrange-Act-Assert pattern
+- Test both success and failure cases
+- Mock external dependencies
+- Use `beforeEach` for common setup
+- Test edge cases and error conditions
+
+## Controller Testing
+- Mock request/response objects
+- Test HTTP status codes and response data
+- Verify error handling and validation
+
+## Model Testing
+- Test data validation
+- Test type definitions and interfaces
+- Verify business logic and transformations

@@ -1,0 +1,48 @@
+---
+description: File organization and naming conventions
+---
+
+# File Organization Guidelines
+
+## Directory Naming
+- Use lowercase with dashes: `user-management/`, `auth-helpers/`
+- Keep directory names descriptive and specific
+- Group related functionality together
+
+## File Naming
+- TypeScript files: `camelCase.ts` (e.g., `userController.ts`, `authMiddleware.ts`)
+- Test files: `camelCase.test.ts` (e.g., `userController.test.ts`)
+- View files: `kebab-case.ejs` (e.g., `user-profile.ejs`, `edit-form.ejs`)
+- CSS files: `kebab-case.css` (e.g., `main-style.css`)
+
+## File Structure Within Modules
+```
+feature-name/
+├── controller.ts     # HTTP request handling
+├── controller.test.ts # Controller tests
+├── service.ts        # Business logic
+├── service.test.ts   # Service tests
+├── model.ts          # Data models/types
+├── routes.ts         # Route definitions
+└── validation.ts     # Input validation schemas
+```
+
+## Import/Export Patterns
+- Use named exports for utilities and helpers
+- Use default exports for main module functionality
+- Keep imports organized and clean
+- Use barrel exports (index.ts) for complex modules
+
+## Code Organization Within Files
+1. Imports (external first, then internal)
+2. Type definitions and interfaces
+3. Constants and configuration
+4. Helper functions
+5. Main implementation
+6. Default export
+
+## Static Assets
+- Images: `public/images/`
+- Stylesheets: `public/css/`
+- Client scripts: `public/js/`
+- Vendor libraries: `public/vendor/`

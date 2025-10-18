@@ -1,0 +1,59 @@
+---
+globs: *.ts,*.tsx
+description: TypeScript coding style and best practices
+---
+
+# TypeScript Style Guide
+
+## Code Style Preferences
+- Use functional and declarative programming patterns; avoid classes
+- Prefer `const` over `function` declarations: `const handleClick = () => {}`
+- Use early returns for better readability and error handling
+- Implement guard clauses for preconditions and invalid states
+
+## Naming Conventions
+- Use descriptive variable names with auxiliary verbs: `isLoading`, `hasError`, `canEdit`
+- Event handlers should have "handle" prefix: `handleClick`, `handleSubmit`, `handleKeyDown`
+- Use PascalCase for types and interfaces: `User`, `ApiResponse`
+- Use camelCase for variables and functions: `userData`, `fetchUser`
+
+## Type Definitions
+- Always define explicit types when possible
+- Use interfaces for object shapes
+- Prefer union types over enums where appropriate
+- Export types alongside implementation files
+
+## Error Handling
+- Use custom error types for consistent error handling
+- Implement early returns for error conditions
+- Always handle async/await with proper error catching
+
+## Import Organization
+- Group imports: external dependencies first, then internal modules
+- Use absolute imports where configured
+- Keep imports clean and organized
+
+## Example Pattern:
+```typescript
+// Types first
+interface UserData {
+  id: string;
+  email: string;
+  isActive: boolean;
+}
+
+// Main implementation
+const fetchUserData = async (userId: string): Promise<UserData | null> => {
+  if (!userId) {
+    return null; // Early return for guard clause
+  }
+  
+  try {
+    const response = await api.get(`/users/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Failed to fetch user:', error);
+    return null;
+  }
+};
+```

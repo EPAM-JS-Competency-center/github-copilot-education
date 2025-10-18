@@ -1,0 +1,37 @@
+---
+alwaysApply: true
+description: Project structure and architecture guidelines
+---
+
+# Project Structure Guide
+
+This is a TypeScript Express.js application with the following structure:
+
+## Core Files
+- [app.ts](mdc:src/app.ts) - Main application entry point
+- [tsconfig.json](mdc:tsconfig.json) - TypeScript configuration
+- [package.json](mdc:package.json) - Dependencies and scripts
+- [jest.config.js](mdc:jest.config.js) - Jest testing configuration
+
+## Source Organization
+- `src/controllers/` - Request handlers and business logic
+- `src/models/` - Data models and types
+- `src/routes/` - Express route definitions
+- `src/views/` - EJS templates for server-side rendering
+  - `layouts/` - Page layout templates
+  - `partials/` - Reusable template components
+  - Feature-specific folders (e.g., `users/`)
+
+## Static Assets
+- `public/css/` - Stylesheets
+- `public/js/` - Client-side JavaScript
+
+## Testing
+- Test files use `.test.ts` extension and are co-located with source files
+- [setupTests.js](mdc:setupTests.js) - Test environment configuration
+
+## Conventions
+- Use lowercase with dashes for directory names
+- Controllers handle HTTP requests and delegate to services
+- Models define TypeScript interfaces and types
+- Views use EJS templating with partials for reusability
