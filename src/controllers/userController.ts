@@ -14,8 +14,17 @@ class UserController {
 
     public editUser(req: any, res: any) {
         const userId = req.params.id ? parseInt(req.params.id) : null;
-        const user = userId ? this.users.find(user => user.id === userId) : { id: null, name: '', email: '' };
-        res.render('users/edit', { user });
+        if (userId) {
+            const user = this.users.find(user => user.id === userId);
+            if (!user) {
+                res.status(404).render('users/details', { user: null, message: 'User not found' });
+                return;
+            }
+            res.render('users/edit', { user });
+            return;
+        }
+        const blankUser = { id: 0, name: '', email: '' };
+        res.render('users/edit', { user: blankUser });
     }
 
     public saveUser(req: any, res: any) {
@@ -24,9 +33,11 @@ class UserController {
         
         if (userId) {
             const userIndex = this.users.findIndex(user => user.id === userId);
-            if (userIndex !== -1) {
-                this.users[userIndex] = { id: userId, name, email };
+            if (userIndex === -1) {
+                res.status(404).render('users/details', { user: null, message: 'User not found' });
+                return;
             }
+            this.users[userIndex] = { id: userId, name, email };
         } else {
             const newUser = { id: this.nextId++, name, email };
             this.users.push(newUser);
