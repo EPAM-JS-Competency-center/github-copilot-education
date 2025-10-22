@@ -1,4 +1,9 @@
+import { Request, Response } from "express";
 import { User } from "../models/user";
+
+type ParamsWithId = { id: string };
+type ParamsWithOptionalId = { id?: string };
+interface SaveUserBody { name: string; email: string }
 
 class UserController {
     private users: User[] = [
@@ -8,13 +13,13 @@ class UserController {
     ];
     private nextId: number = 4;  // Updated to continue after the initial users
 
-    public listUsers(req: any, res: any) {
+    public listUsers(req: Request, res: Response): void {
         res.render('users/list', { users: this.users });
     }
 
-    public editUser(req: any, res: any) {
-        const userId = req.params.id ? parseInt(req.params.id) : null;
-        if (userId) {
+    public editUser(req: Request<ParamsWithOptionalId>, res: Response): void {
+        const userId = req.params.id ? parseInt(req.params.id, 10) : null;
+        if (userId !== null) {
             const user = this.users.find(user => user.id === userId);
             if (!user) {
                 res.status(404).render('users/details', { user: null, message: 'User not found' });
@@ -23,15 +28,15 @@ class UserController {
             res.render('users/edit', { user });
             return;
         }
-        const blankUser = { id: 0, name: '', email: '' };
+        const blankUser: User = { id: 0, name: '', email: '' };
         res.render('users/edit', { user: blankUser });
     }
 
-    public saveUser(req: any, res: any) {
-        const userId = req.params.id ? parseInt(req.params.id) : null;
+    public saveUser(req: Request<ParamsWithOptionalId, unknown, SaveUserBody>, res: Response): void {
+        const userId = req.params.id ? parseInt(req.params.id, 10) : null;
         const { name, email } = req.body;
         
-        if (userId) {
+        if (userId !== null) {
             const userIndex = this.users.findIndex(user => user.id === userId);
             if (userIndex === -1) {
                 res.status(404).render('users/details', { user: null, message: 'User not found' });
@@ -45,15 +50,15 @@ class UserController {
         res.redirect('/users');
     }
 
-    public removeUser(req: any, res: any) {
-        const userId = parseInt(req.params.id);
+    public removeUser(req: Request<ParamsWithId>, res: Response): void {
+        const userId = parseInt(req.params.id, 10);
         this.users = this.users.filter(user => user.id !== userId);
         res.redirect('/users');
     }
 
-    public viewUser(req: any, res: any) {
-        const userId = req.params.id ? parseInt(req.params.id) : null;
-        if (!userId) {
+    public viewUser(req: Request<ParamsWithId>, res: Response): void {
+        const userId = parseInt(req.params.id, 10);
+        if (Number.isNaN(userId)) {
             res.status(404).render('users/details', { user: null, message: 'User not found' });
             return;
         }
