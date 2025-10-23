@@ -22,9 +22,10 @@ footer {
 }
 
 .container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px;
 }
 
 .user-list {
@@ -41,4 +42,61 @@ footer {
 
 .edit-form input {
     margin: 5px;
+}
+
+/* Details page card layout */
+.page-surface {
+    background-color: #f6f8fb;
+    min-height: calc(100vh - 120px); /* subtract header+footer approx */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+.card {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 540px;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    padding: 28px;
+}
+
+.card h1 {
+    margin: 0 0 16px 0;
+    text-align: center;
+    color: #243447;
+}
+
+.card .field {
+    margin: 14px 0;
+    font-size: 16px;
+}
+
+.muted {
+    color: #38465a;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background-color: #1e78ff;
+    color: #ffffff;
+}
+
+.actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 18px;
 }

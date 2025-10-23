@@ -18,19 +18,31 @@
 <body>
     <%- include('../partials/header.ejs') %>
 
-    <div class="container">
-        <% if (user) { %>
-            <h1>User Details</h1>
-            <p><strong>Name:</strong> <%= user.name %></p>
-            <p><strong>Email:</strong> <%= user.email %></p>
-        <% } else { %>
-            <h1>User not found</h1>
-            <% if (message) { %>
-                <p><%= message %></p>
+    <div class="page-surface">
+        <section class="card" aria-labelledby="user-profile-title">
+            <% if (user) { %>
+                <h1 id="user-profile-title">User Profile</h1>
+                <div class="field">
+                    <span class="muted"><strong>Name:</strong></span>
+                    <span> <%= user.name %></span>
+                </div>
+                <div class="field">
+                    <span class="muted"><strong>Email:</strong></span>
+                    <span> <%= user.email %></span>
+                </div>
+                <div class="actions">
+                    <a href="/users" class="btn btn-primary" role="button" aria-label="Back to list" tabindex="0" onkeydown="handleKey(event)">Back</a>
+                </div>
+            <% } else { %>
+                <h1 id="user-profile-title">User not found</h1>
+                <% if (message) { %>
+                    <p><%= message %></p>
+                <% } %>
+                <div class="actions">
+                    <a href="/users" class="btn btn-primary" role="button" aria-label="Back to list" tabindex="0" onkeydown="handleKey(event)">Back</a>
+                </div>
             <% } %>
-        <% } %>
-
-        <a href="/users" role="button" aria-label="Back to list" tabindex="0" onkeydown="handleKey(event)">Back to List</a>
+        </section>
     </div>
 
     <%- include('../partials/footer.ejs') %>
