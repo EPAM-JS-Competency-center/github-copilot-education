@@ -5,6 +5,7 @@ import { setRoutes } from './routes/userRoutes';
 import { setAuthRoutes } from './routes/authRoutes';
 import { attachUserFromJwt, cookieParserMiddleware } from './middleware/requireAuth';
 import path from 'path';
+import { landing } from './controllers/homeController';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,6 +19,7 @@ app.set('view engine', 'ejs');
 app.use(attachUserFromJwt);
 
 // Routes
+app.get('/', landing);
 setAuthRoutes(app);
 setRoutes(app);
 

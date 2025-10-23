@@ -19,7 +19,7 @@ export const attachUserFromJwt = (req: Request, _res: Response, next: NextFuncti
 
 export const requireAuth = (req: Request, res: Response, next: NextFunction): void => {
     if (!(req as RequestWithAuth).authUser) {
-        res.status(401).send('Unauthorized');
+        res.redirect('/');
         return;
     }
     next();
