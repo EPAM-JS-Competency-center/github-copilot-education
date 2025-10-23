@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { User } from "../models/user";
+import type { AuthUser } from "../services/authService";
 
 type ParamsWithId = { id: string };
 type ParamsWithOptionalId = { id?: string };
@@ -13,8 +14,14 @@ class UserController {
     ];
     private nextId: number = 4;  // Updated to continue after the initial users
 
+    private getAuthUser = (req: Request): AuthUser | null => {
+        const r = req as Request & { authUser?: AuthUser };
+        return r.authUser || null;
+    };
+
     public listUsers(req: Request, res: Response): void {
-        res.render('users/list', { users: this.users });
+        const authUser = this.getAuthUser(req);
+        res.render('users/list', { users: this.users, authUser });
     }
 
     public editUser(req: Request<ParamsWithOptionalId>, res: Response): void {
@@ -25,11 +32,13 @@ class UserController {
                 res.status(404).render('users/details', { user: null, message: 'User not found' });
                 return;
             }
-            res.render('users/edit', { user });
+            const authUser = this.getAuthUser(req);
+            res.render('users/edit', { user, authUser });
             return;
         }
         const blankUser: User = { id: 0, name: '', email: '' };
-        res.render('users/edit', { user: blankUser });
+        const authUser = this.getAuthUser(req);
+        res.render('users/edit', { user: blankUser, authUser });
     }
 
     public saveUser(req: Request<ParamsWithOptionalId, unknown, SaveUserBody>, res: Response): void {
@@ -64,10 +73,12 @@ class UserController {
         }
         const user = this.users.find(user => user.id === userId) || null;
         if (!user) {
-            res.status(404).render('users/details', { user: null, message: 'User not found' });
+            const authUser = this.getAuthUser(req);
+            res.status(404).render('users/details', { user: null, message: 'User not found', authUser });
             return;
         }
-        res.render('users/details', { user, message: null });
+        const authUser = this.getAuthUser(req);
+        res.render('users/details', { user, message: null, authUser });
     }
 }
 

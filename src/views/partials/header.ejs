@@ -13,6 +13,16 @@
             <ul>
                 <li><a href="/users">User List</a></li>
                 <li><a href="/users/edit">Add User</a></li>
+                <% if (typeof authUser !== 'undefined' && authUser) { %>
+                <li>Signed in as <%= authUser.name || authUser.email %></li>
+                <li>
+                    <form action="/auth/logout" method="post" style="display:inline;">
+                        <button type="submit">Sign out</button>
+                    </form>
+                </li>
+                <% } else { %>
+                <li><a href="/auth/google">Sign in with Google</a></li>
+                <% } %>
             </ul>
         </nav>
     </header>
