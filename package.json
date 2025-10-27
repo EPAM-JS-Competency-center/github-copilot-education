@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node src/app.ts",
     "build": "tsc",
-    "dev": "nodemon src/app.ts"
+    "dev": "nodemon src/app.ts",
+    "test": "jest --runInBand"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

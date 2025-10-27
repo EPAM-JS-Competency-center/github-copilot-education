@@ -36,7 +36,7 @@ class UserController {
             res.render('users/edit', { user, authUser });
             return;
         }
-        const blankUser: User = { id: 0, name: '', email: '' };
+        const blankUser: User = { id: null, name: '', email: '' };
         const authUser = this.getAuthUser(req);
         res.render('users/edit', { user: blankUser, authUser });
     }
@@ -73,8 +73,7 @@ class UserController {
         }
         const user = this.users.find(user => user.id === userId) || null;
         if (!user) {
-            const authUser = this.getAuthUser(req);
-            res.status(404).render('users/details', { user: null, message: 'User not found', authUser });
+            res.status(404).render('users/details', { user: null, message: 'User not found' });
             return;
         }
         const authUser = this.getAuthUser(req);
